@@ -18,14 +18,14 @@ class Signal {
         using value_type = T;
         using index_type = int;
         using size_type = std::size_t;
-        using range = std::pair<size_type, size_type>;
+        using range = std::pair<index_type, index_type>;
         using container = std::vector<value_type>;
 
         Signal(); // Default constructor
         Signal(index_type n_min, index_type n_max); // Construct domain based on min and max n
-        Signal(index_type [n_min, n_max]); // Construct domain based on array of size 2 with min and max n
-        Signal(range domain); // Construct domain based on pair with min and max n
-        Signal(container samples); // Construct signal based on samples; autofill domain
+        explicit Signal(index_type* arr); // Construct domain based on array of size 2 with min and max n
+        explicit Signal(range domain); // Construct domain based on pair with min and max n
+        Signal(container samples, index_type n_min, index_type n_max); // Construct signal based on samples; autofill domain
         Signal(const Signal& other); // Copy constructor
         ~Signal(); // Default destructor
 
@@ -39,6 +39,7 @@ class Signal {
 
         [[nodiscard]] value_type at(index_type n) const noexcept;
         value_type& operator[](size_type i) noexcept;
+        const value_type& operator[](size_type i) const noexcept;
 
 
         Signal& operator=(const Signal& other); // Overloaded copy assignment operator
